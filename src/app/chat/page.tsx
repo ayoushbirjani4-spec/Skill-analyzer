@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
 type ChatMessage = {
@@ -15,7 +15,7 @@ type Context = {
   nextSkills?: string[];
 };
 
-export default function ChatPage() {
+function ChatContent() {
   const searchParams = useSearchParams();
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -138,5 +138,13 @@ export default function ChatPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ChatPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-background text-foreground">Loading...</div>}>
+      <ChatContent />
+    </Suspense>
   );
 }
