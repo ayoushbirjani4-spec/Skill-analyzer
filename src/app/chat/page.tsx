@@ -56,7 +56,7 @@ export default function ChatPage() {
     if (!trimmed) return;
     setError(null);
 
-    const nextMessages = [...messages, { role: "user", content: trimmed }];
+    const nextMessages: ChatMessage[] = [...messages, { role: "user", content: trimmed }];
     setMessages(nextMessages);
     setInput("");
     setLoading(true);
