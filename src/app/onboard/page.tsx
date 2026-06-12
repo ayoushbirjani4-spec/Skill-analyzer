@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -14,7 +14,7 @@ const proficiencyOptions = [
   { label: "Expert", value: 100, badge: "E" }
 ];
 
-export default function OnboardPage() {
+function OnboardContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const role = searchParams.get("role") || "";
@@ -170,5 +170,13 @@ export default function OnboardPage() {
         {isProcessing ? "Processing..." : "Analyze Skill Gaps"}
       </button>
     </div>
+  );
+}
+
+export default function OnboardPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-background text-foreground">Loading...</div>}>
+      <OnboardContent />
+    </Suspense>
   );
 }
